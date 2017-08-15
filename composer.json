@@ -1,0 +1,28 @@
+{
+    "name": "ossbrownie/carts-guru",
+    "description": "Recover Your Abandoned Carts and Turn Them into Sales.",
+    "license": "LGPLv3",
+    "type": "library",
+    "keywords": ["brownie", "carts-guru", "carts.guru", "abandoned carts"],
+    "homepage": "https://github.com/ossbrownie/carts-guru",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "brownie",
+            "email": "oss.brownie@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.35",
+        "Phpdocumentor/reflection-docblock": "2.0. *"
+    },
+    "autoload": {
+        "psr-4": {
+            "Brownie\\CartsGuru\\": "src/Brownie/CartsGuru/"
+        }
+    }
+}
