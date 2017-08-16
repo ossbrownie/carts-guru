@@ -1,5 +1,11 @@
 # Change Log
 
+## dev-master
+
+## 0.0.2 (2017-08-16)
+Features:
+- Add Badge Poser
+
 ## 0.0.1 (2017-08-15)
 Features:
 - Initinal commit.

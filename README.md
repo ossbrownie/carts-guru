@@ -1,6 +1,11 @@
 CartsGuru
 =========
 
+[![Latest Stable Version](https://poser.pugx.org/ossbrownie/carts-guru/v/stable)](https://packagist.org/packages/ossbrownie/carts-guru)
+[![Total Downloads](https://poser.pugx.org/ossbrownie/carts-guru/downloads)](https://packagist.org/packages/ossbrownie/carts-guru)
+[![Latest Unstable Version](https://poser.pugx.org/ossbrownie/carts-guru/v/unstable)](https://packagist.org/packages/ossbrownie/carts-guru)
+[![License](https://poser.pugx.org/ossbrownie/carts-guru/license)](https://packagist.org/packages/ossbrownie/carts-guru)
+
 Recover Your Abandoned Carts and Turn Them into Sales.
 
 ## curl
