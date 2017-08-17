@@ -24,7 +24,7 @@ $cartsGuru = new CartsGuru(
             'apiAuthKey' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ])
     ),
-    'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+    'site-id-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 );
 
 $item = new Item([
