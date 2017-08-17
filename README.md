@@ -12,7 +12,7 @@ Recover Your Abandoned Carts and Turn Them into Sales.
 A basic CURL wrapper for PHP (see [http://php.net/curl](http://php.net/curl) for more information about the libcurl extension for PHP)
 
 ## Requirements
-- **PHP** >= 5.4
+- **PHP** >= 5.3
 - **EXT-CURL** = *
 
 ## Usage
