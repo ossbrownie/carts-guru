@@ -20,14 +20,14 @@ A basic CURL wrapper for PHP (see [http://php.net/curl](http://php.net/curl) for
 $cartsGuru = new CartsGuru(
     new HTTPClient(
         new CurlClient(),
-        new Config([
+        new Config(array(
             'apiAuthKey' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        ])
+        ))
     ),
     'site-id-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 );
 
-$item = new Item([
+$item = new Item(array(
     'id' => 'test-item-0008',
     'label' => 'product',
     'quantity' => 1,
@@ -35,7 +35,7 @@ $item = new Item([
     'totalET' => 150,
     'url' => 'http://site.com/product/0008',
     'imageUrl' => 'http://site.com/product/0008.jpg',
-]);
+));
 
 $cart = new Cart(
     array(

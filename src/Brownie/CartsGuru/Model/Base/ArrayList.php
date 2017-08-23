@@ -15,7 +15,7 @@ use Brownie\CartsGuru\Exception\UndefinedMethodException;
 abstract class ArrayList
 {
 
-    public function __construct($values = [])
+    public function __construct($values = array())
     {
         foreach ($values as $key => $value) {
             $method = 'set' . ucfirst($key);

@@ -22,9 +22,9 @@ use Brownie\CartsGuru\Model\Base\ArrayList;
 class Config extends ArrayList
 {
 
-    protected $fields = [
+    protected $fields = array(
         'timeOut' => 30,
         'apiUrl' => 'https://api.carts.guru',
         'apiAuthKey' => 'x-auth-key'
-    ];
+    );
 }

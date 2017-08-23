@@ -26,7 +26,7 @@ use Brownie\CartsGuru\Exception\ValidateException;
 class Item extends ArrayList
 {
 
-    protected $fields = [
+    protected $fields = array(
         'id' => null,               // SKU or product id
         'label' => null,            // Designation
         'quantity' => null,         // Count
@@ -36,7 +36,7 @@ class Item extends ArrayList
         'imageUrl' => null,         // Image URL of the  product, size should be min 150*150, max 180*180
         'universe' => null,         // Main category of the product (optional)
         'category' => null,         // Sub category of the product (optional)
-    ];
+    );
 
     /**
      * Validates contact data.
@@ -47,7 +47,7 @@ class Item extends ArrayList
     {
         $args = array_filter(parent::toArray());
 
-        $keys = array_diff([
+        $keys = array_diff(array(
             'id',
             'label',
             'quantity',
@@ -55,7 +55,7 @@ class Item extends ArrayList
             'totalET',
             'url',
             'imageUrl',
-        ], array_keys($args));
+        ), array_keys($args));
 
         if ($keys) {
             throw new ValidateException('No required fields: ' . implode(', ', $keys));

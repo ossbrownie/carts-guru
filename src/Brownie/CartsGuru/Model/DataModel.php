@@ -24,7 +24,7 @@ abstract class DataModel extends ArrayList
     {
         $args = parent::toArray();
         if ($args['items']) {
-            $list = [];
+            $list = array();
             foreach ($args['items']->toArray() as $item) {
                 $list[] = array_filter($item->toArray());
             }
