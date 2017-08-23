@@ -2,6 +2,10 @@
 
 ## dev-master
 
+## 0.0.3 (2017-08-23)
+Features:
+- Adapting to PHP version 5.3
+
 ## 0.0.2 (2017-08-16)
 Features:
 - Add Badge Poser
