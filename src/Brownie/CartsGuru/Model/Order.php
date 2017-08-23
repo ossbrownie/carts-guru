@@ -36,7 +36,7 @@ use Brownie\CartsGuru\Exception\ValidateException;
 class Order extends DataModel
 {
 
-    protected $fields = [
+    protected $fields = array(
         'id' => null,                   // Order reference, the same display to the buyer
         'siteId' => null,               // SiteId is part of configuration
         'cartId' => null,               // Cart reference, source of the order (optional)
@@ -58,7 +58,7 @@ class Order extends DataModel
         'countryCode' => null,          // Country ISO code of the buyer (you can send country or country code)
         'custom' => null,               // Any custom fields you want to send with the cart. Standard fields are language (ISO code), customerGroup and isNewCustomer (Boolean)
         'items' => null,                // Details of each items
-    ];
+    );
 
     /**
      * Validates contact data.
@@ -69,7 +69,7 @@ class Order extends DataModel
     {
         $args = array_filter(parent::toArray());
 
-        $keys = array_diff([
+        $keys = array_diff(array(
             'id',
             'siteId',
             'totalATI',
@@ -81,7 +81,7 @@ class Order extends DataModel
             'country',
             'countryCode',
             'items',
-        ], array_keys($args));
+        ), array_keys($args));
 
         if ($keys) {
             throw new ValidateException('No required fields: ' . implode(', ', $keys));

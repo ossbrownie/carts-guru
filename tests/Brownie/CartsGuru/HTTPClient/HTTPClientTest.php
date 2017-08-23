@@ -1,7 +1,6 @@
 <?php
 
 use Brownie\CartsGuru\HTTPClient\HTTPClient;
-use Brownie\CartsGuru\Config;
 use Brownie\CartsGuru\HTTPClient\Client;
 use Prophecy\Prophecy\MethodProphecy;
 
@@ -25,33 +24,36 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->clientMock = $this
-            ->prophesize(Client::class);
+            ->prophesize('Brownie\CartsGuru\HTTPClient\Client');
 
         $config = $this
-            ->prophesize(Config::class);
+            ->prophesize('Brownie\CartsGuru\Config');
 
+        $methodGetApiUrl = new MethodProphecy(
+            $config,
+            'getApiUrl',
+            array()
+        );
         $config->addMethodProphecy(
-            (new MethodProphecy(
-                $config,
-                'getApiUrl',
-                []
-            ))->willReturn('https://localhost/api')
+            $methodGetApiUrl->willReturn('https://localhost/api')
         );
 
+        $methodGetTimeout = new MethodProphecy(
+            $config,
+            'getTimeOut',
+            array()
+        );
         $config->addMethodProphecy(
-            (new MethodProphecy(
-                $config,
-                'getTimeOut',
-                []
-            ))->willReturn(100)
+            $methodGetTimeout->willReturn(100)
         );
 
+        $methodGetApiAuthKey = new MethodProphecy(
+            $config,
+            'getApiAuthKey',
+            array()
+        );
         $config->addMethodProphecy(
-            (new MethodProphecy(
-                $config,
-                'getApiAuthKey',
-                []
-            ))->willReturn('xxxx-xxxx-xxxx')
+            $methodGetApiAuthKey->willReturn('xxxx-xxxx-xxxx')
         );
 
         $this->httpClientClass = new HTTPClient($this->clientMock->reveal(), $config->reveal());
@@ -64,42 +66,44 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
 
     public function testRequestTrackCart()
     {
+        $methodHttprequest = new MethodProphecy(
+            $this->clientMock,
+            'httpRequest',
+            array('https://localhost/api/carts', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+        );
         $this
             ->clientMock
             ->addMethodProphecy(
-                (new MethodProphecy(
-                    $this->clientMock,
-                    'httpRequest',
-                    ['https://localhost/api/carts', 'xxxx-xxxx-xxxx', [], 'POST', 100]
-                ))->willReturn([
+                $methodHttprequest->willReturn(array(
                     '{"status":"success"}',
                     200,
                     0.7
-                ])
+                ))
             );
 
-        $status = $this->httpClientClass->request(200, 'carts', [], 'POST');
+        $status = $this->httpClientClass->request(200, 'carts', array(), 'POST');
 
         $this->assertEquals('success', $status['response']['status']);
     }
 
     public function testRequestTrackOrder()
     {
+        $methodHttpRequest = new MethodProphecy(
+            $this->clientMock,
+            'httpRequest',
+            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+        );
         $this
             ->clientMock
             ->addMethodProphecy(
-                (new MethodProphecy(
-                    $this->clientMock,
-                    'httpRequest',
-                    ['https://localhost/api/orders', 'xxxx-xxxx-xxxx', [], 'POST', 100]
-                ))->willReturn([
+                $methodHttpRequest->willReturn(array(
                     '{"status":"success"}',
                     200,
                     0.7
-                ])
+                ))
             );
 
-        $status = $this->httpClientClass->request(200, 'orders', [], 'POST');
+        $status = $this->httpClientClass->request(200, 'orders', array(), 'POST');
 
         $this->assertEquals('success', $status['response']['status']);
     }

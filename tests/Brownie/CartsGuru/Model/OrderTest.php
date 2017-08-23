@@ -1,7 +1,6 @@
 <?php
 
 use Brownie\CartsGuru\Model\Order;
-use Brownie\CartsGuru\Model\Item;
 use Prophecy\Prophecy\MethodProphecy;
 
 class OrderTest extends PHPUnit_Framework_TestCase
@@ -27,24 +26,26 @@ class OrderTest extends PHPUnit_Framework_TestCase
     public function testSetGetRequiredParamas()
     {
         $itemMock = $this
-            ->prophesize(Item::class);
+            ->prophesize('Brownie\CartsGuru\Model\Item');
 
+        $methodValidate = new MethodProphecy(
+            $itemMock,
+            'validate',
+            array()
+        );
         $itemMock
             ->addMethodProphecy(
-                (new MethodProphecy(
-                    $itemMock,
-                    'validate',
-                    []
-                ))->willReturn(null)
+                $methodValidate->willReturn(null)
             );
 
+        $methodToArray = new MethodProphecy(
+            $itemMock,
+            'toArray',
+            array()
+        );
         $itemMock
             ->addMethodProphecy(
-                (new MethodProphecy(
-                    $itemMock,
-                    'toArray',
-                    []
-                ))->willReturn([])
+                $methodToArray->willReturn(array())
             );
 
         $item = $itemMock->reveal();

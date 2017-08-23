@@ -2,7 +2,6 @@
 
 use Brownie\CartsGuru\Model\ItemList;
 use Prophecy\Prophecy\MethodProphecy;
-use Brownie\CartsGuru\Model\Item;
 
 class ItemListTest extends PHPUnit_Framework_TestCase
 {
@@ -27,15 +26,16 @@ class ItemListTest extends PHPUnit_Framework_TestCase
     public function testAddItem()
     {
         $itemMock = $this
-            ->prophesize(Item::class);
+            ->prophesize('Brownie\CartsGuru\Model\Item');
 
+        $methodToArray = new MethodProphecy(
+            $itemMock,
+            'toArray',
+            array()
+        );
         $itemMock
             ->addMethodProphecy(
-                (new MethodProphecy(
-                    $itemMock,
-                    'toArray',
-                    []
-                ))->willReturn([])
+                $methodToArray->willReturn(array())
             );
 
         $item = $itemMock->reveal();
@@ -43,6 +43,6 @@ class ItemListTest extends PHPUnit_Framework_TestCase
         $this->assertCount(0, $this->itemListClass->toArray());
         $this->itemListClass->add($item);
         $this->assertCount(1, $this->itemListClass->toArray());
-        $this->assertEquals([$item], $this->itemListClass->toArray());
+        $this->assertEquals(array($item), $this->itemListClass->toArray());
     }
 }

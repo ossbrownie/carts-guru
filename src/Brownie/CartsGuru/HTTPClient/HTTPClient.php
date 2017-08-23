@@ -117,7 +117,7 @@ class HTTPClient
     public function request(
         $checkHTTPCode,
         $endpoint,
-        $data = [],
+        $data = array(),
         $method = self::HTTP_METHOD_GET,
         $ignoreEmptyResponse = false
     ) {
@@ -126,10 +126,10 @@ class HTTPClient
          */
         $apiUrl = implode(
             '/',
-            [
+            array(
                 $this->getConfig()->getApiUrl(),
                 $endpoint
-            ]
+            )
         );
 
         if (is_object($data)) {
@@ -168,9 +168,9 @@ class HTTPClient
             ));
         }
 
-        return [
+        return array(
             'response' => $response,
             'runtime' => $runtime,
-        ];
+        );
     }
 }

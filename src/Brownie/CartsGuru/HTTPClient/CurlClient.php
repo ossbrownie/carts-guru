@@ -46,12 +46,12 @@ class CurlClient implements Client
         curl_setopt($curl, CURLOPT_NOPROGRESS, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_URL, $apiUrl);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Connection: close',
             'Accept: application/json',
             'Content-Type: application/json; charset=utf-8',
             'x-auth-key: ' . $xAuthKey
-        ]);
+        ));
         $responseBody = curl_exec($curl);
 
         $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -67,10 +67,10 @@ class CurlClient implements Client
 
         curl_close($curl);
 
-        return [
+        return array(
             $responseBody,
             $httpCode,
             $runtime
-        ];
+        );
     }
 }
