@@ -6,6 +6,8 @@ CartsGuru
 [![Latest Unstable Version](https://poser.pugx.org/ossbrownie/carts-guru/v/unstable)](https://packagist.org/packages/ossbrownie/carts-guru)
 [![License](https://poser.pugx.org/ossbrownie/carts-guru/license)](https://packagist.org/packages/ossbrownie/carts-guru)
 
+[![Coverage Status](https://coveralls.io/repos/github/ossbrownie/carts-guru/badge.svg?branch=master)](https://coveralls.io/github/ossbrownie/carts-guru?branch=master)
+
 Recover Your Abandoned Carts and Turn Them into Sales.
 
 ## curl
