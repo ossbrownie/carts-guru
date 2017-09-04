@@ -50,6 +50,21 @@ class OrderTest extends PHPUnit_Framework_TestCase
 
         $item = $itemMock->reveal();
 
+        /*
+        $methodGetItems = new MethodProphecy(
+            $this->orderClass,
+            'getItems',
+            array()
+        );
+        $this
+            ->orderClass
+            ->addMethodProphecy(
+                $methodGetItems->willReturn(array(
+                    $item
+                ))
+            );
+        */
+
         $id = 'test-order-0007';
         $siteId = 'xxx';
         $totalATI = 200;
@@ -92,5 +107,15 @@ class OrderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($email, $this->orderClass->getEmail());
         $this->assertEquals($country, $this->orderClass->getCountry());
         $this->assertEquals($countryCode, $this->orderClass->getCountryCode());
+    }
+
+    /**
+     * @expectedException       Brownie\CartsGuru\Exception\ValidateException
+     */
+    public function testValidateException()
+    {
+        $this
+            ->orderClass
+            ->validate();
     }
 }

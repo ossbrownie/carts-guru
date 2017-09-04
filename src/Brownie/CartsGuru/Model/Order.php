@@ -32,6 +32,7 @@ use Brownie\CartsGuru\Exception\ValidateException;
  * @method  Order   setCountry($country)
  * @method  Order   setCountryCode($countryCode)
  * @method  Order   setCustom($custom)
+ * @method  ItemList    getItems()
  */
 class Order extends DataModel
 {
@@ -87,7 +88,7 @@ class Order extends DataModel
             throw new ValidateException('No required fields: ' . implode(', ', $keys));
         }
 
-        foreach ($this->getItems() as $item) {
+        foreach ($this->getItems()->toArray() as $item) {
             $item->validate();
         }
     }

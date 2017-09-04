@@ -90,4 +90,14 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($country, $this->cartClass->getCountry());
         $this->assertEquals($countryCode, $this->cartClass->getCountryCode());
     }
+
+    /**
+     * @expectedException       Brownie\CartsGuru\Exception\ValidateException
+     */
+    public function testValidateException()
+    {
+        $this
+            ->cartClass
+            ->validate();
+    }
 }

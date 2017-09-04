@@ -84,7 +84,7 @@ class Cart extends DataModel
             throw new ValidateException('No required fields: ' . implode(', ', $keys));
         }
 
-        foreach ($this->getItems() as $item) {
+        foreach ($this->getItems()->toArray() as $item) {
             $item->validate();
         }
     }

@@ -14,7 +14,9 @@ class ItemTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->itemClass = new Item();
+        $this->itemClass = new Item(array(
+            'id' => 'test-product-007'
+        ));
     }
 
     protected function tearDown()
@@ -34,7 +36,6 @@ class ItemTest extends PHPUnit_Framework_TestCase
 
         $this
             ->itemClass
-            ->setId($id)
             ->setLabel($label)
             ->setQuantity($quantity)
             ->setTotalATI($totalATI)
@@ -51,5 +52,21 @@ class ItemTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($totalET, $this->itemClass->getTotalET());
         $this->assertEquals($url, $this->itemClass->getUrl());
         $this->assertEquals($imageUrl, $this->itemClass->getImageUrl());
+    }
+
+    /**
+     * @expectedException       Brownie\CartsGuru\Exception\ValidateException
+     */
+    public function testValidateException()
+    {
+        $this->itemClass->validate();
+    }
+
+    /**
+     * @expectedException       Brownie\CartsGuru\Exception\UndefinedMethodException
+     */
+    public function testUndefinedMethodException()
+    {
+        $this->itemClass->getUndefinedMethod();
     }
 }

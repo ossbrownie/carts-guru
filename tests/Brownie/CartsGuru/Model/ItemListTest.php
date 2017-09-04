@@ -44,5 +44,7 @@ class ItemListTest extends PHPUnit_Framework_TestCase
         $this->itemListClass->add($item);
         $this->assertCount(1, $this->itemListClass->toArray());
         $this->assertEquals(array($item), $this->itemListClass->toArray());
+        $this->assertEquals('items', $this->itemListClass->getKeyName());
+        $this->assertEquals(1, $this->itemListClass->count());
     }
 }

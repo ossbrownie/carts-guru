@@ -66,6 +66,19 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
 
     public function testRequestTrackCart()
     {
+        $cartMock = $this->prophesize('Brownie\CartsGuru\Model\Cart');
+        $methodToArray = new MethodProphecy(
+            $cartMock,
+            'toArray',
+            array()
+        );
+        $cartMock
+            ->addMethodProphecy(
+                $methodToArray->willReturn(array())
+            );
+
+        $cart = $cartMock->reveal();
+
         $methodHttprequest = new MethodProphecy(
             $this->clientMock,
             'httpRequest',
@@ -84,10 +97,27 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $status = $this->httpClientClass->request(200, 'carts', array(), 'POST');
 
         $this->assertEquals('success', $status['response']['status']);
+
+        $status = $this->httpClientClass->request(200, 'carts', $cart, 'POST');
+
+        $this->assertEquals('success', $status['response']['status']);
     }
 
     public function testRequestTrackOrder()
     {
+        $orderMock = $this->prophesize('Brownie\CartsGuru\Model\Order');
+        $methodToArray = new MethodProphecy(
+            $orderMock,
+            'toArray',
+            array()
+        );
+        $orderMock
+            ->addMethodProphecy(
+                $methodToArray->willReturn(array())
+        );
+
+        $order = $orderMock->reveal();
+
         $methodHttpRequest = new MethodProphecy(
             $this->clientMock,
             'httpRequest',
@@ -106,5 +136,94 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $status = $this->httpClientClass->request(200, 'orders', array(), 'POST');
 
         $this->assertEquals('success', $status['response']['status']);
+
+        $status = $this->httpClientClass->request(200, 'orders', $order, 'POST');
+
+        $this->assertEquals('success', $status['response']['status']);
+    }
+
+    /**
+     * @expectedException     \Brownie\CartsGuru\Exception\JsonException
+     */
+    public function testJsonException()
+    {
+        $methodHttpRequest = new MethodProphecy(
+            $this->clientMock,
+            'httpRequest',
+            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+        );
+        $this
+            ->clientMock
+            ->addMethodProphecy(
+                $methodHttpRequest->willReturn(array(
+                    'Json fail',
+                    200,
+                    0.7
+                ))
+            );
+
+        $this->httpClientClass->request(200, 'orders', array(), 'POST');
+    }
+
+    /**
+     * @expectedException     \Brownie\CartsGuru\Exception\InvalidCodeException
+     */
+    public function testInvalidCodeException()
+    {
+        $methodHttpRequest = new MethodProphecy(
+            $this->clientMock,
+            'httpRequest',
+            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+        );
+        $this
+            ->clientMock
+            ->addMethodProphecy(
+                $methodHttpRequest->willReturn(array(
+                    '{}',
+                    404,
+                    0.7
+                ))
+            );
+
+        $this->httpClientClass->request(200, 'orders', array(), 'POST');
+    }
+
+    public function testIgnoreEmptyResponse()
+    {
+        $methodHttpRequest = new MethodProphecy(
+            $this->clientMock,
+            'httpRequest',
+            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+        );
+        $message = 'Test message';
+        $this
+            ->clientMock
+            ->addMethodProphecy(
+                $methodHttpRequest->willReturn(array(
+                    $message,
+                    200,
+                    0.7
+                ))
+            );
+
+        $response = $this->httpClientClass->request(200, 'orders', array(), 'POST', true);
+
+        $this->assertEquals($message, $response['response']);
+    }
+
+    public function testGetJsonLastErrorMsg()
+    {
+        foreach (array(
+            JSON_ERROR_DEPTH            => 'Maximum stack depth exceeded',
+            JSON_ERROR_STATE_MISMATCH   => 'Underflow or the modes mismatch',
+            JSON_ERROR_CTRL_CHAR        => 'Unexpected control character found',
+            JSON_ERROR_SYNTAX           => 'Syntax error, malformed JSON',
+            JSON_ERROR_UTF8             => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+            999                         => 'Unknown error',
+                 ) as $key => $message) {
+
+            $error = $this->httpClientClass->getJsonLastErrorMsg($key);
+            $this->assertEquals($error, $message);
+        }
     }
 }
