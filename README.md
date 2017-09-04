@@ -6,7 +6,9 @@ CartsGuru
 [![Latest Unstable Version](https://poser.pugx.org/ossbrownie/carts-guru/v/unstable)](https://packagist.org/packages/ossbrownie/carts-guru)
 [![License](https://poser.pugx.org/ossbrownie/carts-guru/license)](https://packagist.org/packages/ossbrownie/carts-guru)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ossbrownie/carts-guru/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ossbrownie/carts-guru/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ossbrownie/carts-guru/badge.svg?branch=master)](https://coveralls.io/github/ossbrownie/carts-guru?branch=master)
+[![Build Status](https://travis-ci.org/ossbrownie/carts-guru.svg?branch=master)](https://travis-ci.org/ossbrownie/carts-guru)
 
 Recover Your Abandoned Carts and Turn Them into Sales.
 

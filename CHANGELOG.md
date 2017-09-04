@@ -2,6 +2,10 @@
 
 ## dev-master
 
+## 0.0.5 (2017-09-04)
+- Minor fix.
+- Add badge: Scrutinizer, Coverage, Build Status.
+
 ## 0.0.4 (2017-09-04)
 - Adapting to PHP version 5.3
 - Work on the Coverage.
