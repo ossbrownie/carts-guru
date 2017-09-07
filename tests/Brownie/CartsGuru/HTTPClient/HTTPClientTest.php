@@ -195,7 +195,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
             'httpRequest',
             array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
         );
-        $message = 'Test message';
+        $message = '';
         $this
             ->clientMock
             ->addMethodProphecy(

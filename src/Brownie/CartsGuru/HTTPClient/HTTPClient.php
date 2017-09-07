@@ -143,11 +143,11 @@ class HTTPClient
                 $this->getConfig()->getApiAuthKey(),
                 $data,
                 $method,
-                $this->getConfig()->getTimeOut()
+                /** @scrutinizer ignore-type */ $this->getConfig()->getTimeOut()
             );
 
-        if ($ignoreEmptyResponse && empty($response)) {
-            $response = $responseBody;
+        if ($ignoreEmptyResponse && empty($responseBody)) {
+            $response = '';
         } else {
             $response = json_decode($responseBody, true);
 
@@ -183,26 +183,20 @@ class HTTPClient
      */
     public function getJsonLastErrorMsg($errorId)
     {
-        switch ($errorId) {
-            case JSON_ERROR_DEPTH:
-                $error = 'Maximum stack depth exceeded';
-                break;
-            case JSON_ERROR_STATE_MISMATCH:
-                $error = 'Underflow or the modes mismatch';
-                break;
-            case JSON_ERROR_CTRL_CHAR:
-                $error = 'Unexpected control character found';
-                break;
-            case JSON_ERROR_SYNTAX:
-                $error = 'Syntax error, malformed JSON';
-                break;
-            case JSON_ERROR_UTF8:
-                $error = 'Malformed UTF-8 characters, possibly incorrectly encoded';
-                break;
-            default:
-                $error = 'Unknown error';
-                break;
+        $message = 'Unknown error';
+
+        $errors = array(
+            JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
+            JSON_ERROR_STATE_MISMATCH => 'Underflow or the modes mismatch',
+            JSON_ERROR_CTRL_CHAR => 'Unexpected control character found',
+            JSON_ERROR_SYNTAX => 'Syntax error, malformed JSON',
+            JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded'
+        );
+
+        if (!empty($errors[$errorId])) {
+            $message = $errors[$errorId];
         }
-        return $error;
+
+        return $message;
     }
 }

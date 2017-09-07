@@ -16,7 +16,8 @@ interface Client
 {
 
     /**
-     * Performs a network request.
+     * Performs a network request in CartsGuru.
+     * Returns the response from CartsGuru.
      *
      * @param string    $apiUrl         API URL.
      * @param string    $xAuthKey       API auth key.

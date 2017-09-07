@@ -8,6 +8,7 @@
 namespace Brownie\CartsGuru\Model;
 
 use Brownie\CartsGuru\Model\Base\ArrayList;
+use Brownie\CartsGuru\Exception\ValidateException;
 
 /**
  * Data model.
@@ -70,5 +71,35 @@ abstract class DataModel extends ArrayList
     private function getItemList()
     {
         return $this->fields['items'];
+    }
+
+    /**
+     * Validates contact data.
+     *
+     * @throws ValidateException
+     */
+    public function validate()
+    {
+        $args = array_filter($this->toArray());
+
+        $keys = array_diff($this->getRequiredFields(), array_keys($args));
+
+        if (!empty($keys)) {
+            throw new ValidateException('No required fields: ' . implode(', ', $keys));
+        }
+
+        foreach ($this->getItems()->toArray() as $item) {
+            $item->validate();
+        }
+    }
+
+    /**
+     * Returns a list of required fields.
+     *
+     * @return array
+     */
+    protected function getRequiredFields()
+    {
+        return $this->requiredFields;
     }
 }
