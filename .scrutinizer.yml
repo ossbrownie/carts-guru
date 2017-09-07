@@ -1,0 +1,8 @@
+build:
+    tests:
+        override:
+            -
+                command: 'vendor/phpunit/phpunit/phpunit --colors=always --bootstrap ./tests/bootstrap.php ./tests --coverage-clover build/logs/clover.xml'
+                coverage:
+                    file: 'build/logs/clover.xml'
+                    format: 'clover'
