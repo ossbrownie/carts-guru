@@ -82,7 +82,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $methodHttprequest = new MethodProphecy(
             $this->clientMock,
             'httpRequest',
-            array('https://localhost/api/carts', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+            array($this->getHTTPClientQuery('carts', 'POST', 100))
         );
         $this
             ->clientMock
@@ -94,7 +94,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
                 ))
             );
 
-        $status = $this->httpClientClass->request(200, 'carts', array(), 'POST');
+        $status = $this->httpClientClass->request(200, 'carts', array(), 'POST');//
 
         $this->assertEquals('success', $status['response']['status']);
 
@@ -121,7 +121,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $methodHttpRequest = new MethodProphecy(
             $this->clientMock,
             'httpRequest',
-            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+            array($this->getHTTPClientQuery('orders', 'POST', 100))
         );
         $this
             ->clientMock
@@ -150,7 +150,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $methodHttpRequest = new MethodProphecy(
             $this->clientMock,
             'httpRequest',
-            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+            array($this->getHTTPClientQuery('orders', 'POST', 100))
         );
         $this
             ->clientMock
@@ -173,7 +173,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $methodHttpRequest = new MethodProphecy(
             $this->clientMock,
             'httpRequest',
-            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+            array($this->getHTTPClientQuery('orders', 'POST', 100))
         );
         $this
             ->clientMock
@@ -193,7 +193,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $methodHttpRequest = new MethodProphecy(
             $this->clientMock,
             'httpRequest',
-            array('https://localhost/api/orders', 'xxxx-xxxx-xxxx', array(), 'POST', 100)
+            array($this->getHTTPClientQuery('orders', 'POST', 100))
         );
         $message = '';
         $this
@@ -225,5 +225,18 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
             $error = $this->httpClientClass->getJsonLastErrorMsg($key);
             $this->assertEquals($error, $message);
         }
+    }
+
+    private function getHTTPClientQuery($endpoint, $method, $timeOut)
+    {
+        $query = new \Brownie\CartsGuru\HTTPClient\Query();
+        $query
+            ->setApiUrl('https://localhost/api/' . $endpoint)
+            ->setXAuthKey('xxxx-xxxx-xxxx')
+            ->setData(array())
+            ->setMethod($method)
+            ->setTimeOut($timeOut);
+
+        return $query;
     }
 }

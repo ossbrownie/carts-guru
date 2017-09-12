@@ -19,39 +19,19 @@ class CurlClient implements Client
      * Performs a network request in CartsGuru.
      * Returns the response from CartsGuru.
      *
-     * @param string    $apiUrl         API URL.
-     * @param string    $xAuthKey       API auth key.
-     * @param array     $data           Arguments of the query.
-     * @param string    $method         Request method.
-     * @param int       $timeOut        Query Timeout.
+     * @param Query       $query        HTTP client query params.
      *
      * @throws ClientException
      *
      * @return array
      */
-    public function httpRequest(
-        $apiUrl,
-        $xAuthKey,
-        $data,
-        $method,
-        $timeOut
-    ) {
+    public function httpRequest(Query $query)
+    {
+        $curl = $this->getCurlClient($query);
+
         /**
          * Executes a network resource request.
          */
-        $curl = curl_init($apiUrl);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($curl, CURLOPT_TIMEOUT, $timeOut);
-        curl_setopt($curl, CURLOPT_NOPROGRESS, true);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_URL, $apiUrl);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'Connection: close',
-            'Accept: application/json',
-            'Content-Type: application/json; charset=utf-8',
-            'x-auth-key: ' . $xAuthKey
-        ));
         $responseBody = curl_exec($curl);
 
         $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -72,5 +52,30 @@ class CurlClient implements Client
             $httpCode,
             $runtime
         );
+    }
+
+    /**
+     * Curl init.
+     *
+     * @param Query       $query        HTTP client query params.
+     *
+     * @return resource
+     */
+    private function getCurlClient(Query $query)
+    {
+        $curl = curl_init($query->getApiUrl());
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($query->getData()));
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $query->getMethod());
+        curl_setopt($curl, CURLOPT_TIMEOUT, $query->getTimeOut());
+        curl_setopt($curl, CURLOPT_NOPROGRESS, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_URL, $query->getApiUrl());
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Connection: close',
+            'Accept: application/json',
+            'Content-Type: application/json; charset=utf-8',
+            'x-auth-key: ' . $query->getXAuthKey()
+        ));
+        return $curl;
     }
 }

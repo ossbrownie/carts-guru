@@ -136,15 +136,17 @@ class HTTPClient
             $data = $data->toArray();
         }
 
+        $query = new Query();
+        $query
+            ->setApiUrl($apiUrl)
+            ->setXAuthKey($this->getConfig()->getApiAuthKey())
+            ->setData($data)
+            ->setMethod($method)
+            ->setTimeOut($this->getConfig()->getTimeOut());
+
         list($responseBody, $httpCode, $runtime) = $this
             ->getClient()
-            ->httpRequest(
-                $apiUrl,
-                $this->getConfig()->getApiAuthKey(),
-                $data,
-                $method,
-                /** @scrutinizer ignore-type */ $this->getConfig()->getTimeOut()
-            );
+            ->httpRequest($query);
 
         if ($ignoreEmptyResponse && empty($responseBody)) {
             $response = '';

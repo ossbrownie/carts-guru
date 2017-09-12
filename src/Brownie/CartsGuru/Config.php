@@ -12,9 +12,9 @@ use Brownie\CartsGuru\Model\Base\ArrayList;
 /**
  * CartsGuru configuration.
  *
- * @method Config   setTimeOut($timeOut)    Set connection timeout.
- * @method Config   setApiUrl($apiUrl)      Set url API.
- * @method Config   setApiAuthKey($apiKey)  Set api auth key.
+ * @method Config   setTimeOut($timeOut)    Sets connection timeout.
+ * @method Config   setApiUrl($apiUrl)      Sets url API.
+ * @method Config   setApiAuthKey($apiKey)  Sets api auth key.
  * @method int      getTimeOut()            Returns the connection timeout.
  * @method string   getApiUrl()             Returns the url API.
  * @method string   getApiAuthKey()         Returns the api auth key.

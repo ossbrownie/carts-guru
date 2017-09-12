@@ -19,21 +19,11 @@ interface Client
      * Performs a network request in CartsGuru.
      * Returns the response from CartsGuru.
      *
-     * @param string    $apiUrl         API URL.
-     * @param string    $xAuthKey       API auth key.
-     * @param array     $data           Arguments of the query.
-     * @param string    $method         Request method.
-     * @param int       $timeOut        Query Timeout.
+     * @param Query       $query        HTTP client query params.
      *
      * @throws ClientException
      *
      * @return array
      */
-    public function httpRequest(
-        $apiUrl,
-        $xAuthKey,
-        $data,
-        $method,
-        $timeOut
-    );
+    public function httpRequest(Query $query);
 }
