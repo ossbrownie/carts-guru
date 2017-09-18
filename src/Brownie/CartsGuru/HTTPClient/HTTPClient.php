@@ -121,16 +121,7 @@ class HTTPClient
         $method = self::HTTP_METHOD_GET,
         $ignoreEmptyResponse = false
     ) {
-        /**
-         * Creates a complete URL to the resource.
-         */
-        $apiUrl = implode(
-            '/',
-            array(
-                $this->getConfig()->getApiUrl(),
-                $endpoint
-            )
-        );
+        $apiUrl = $this->getApiUrl($endpoint);
 
         if (is_object($data)) {
             $data = $data->toArray();
@@ -148,27 +139,13 @@ class HTTPClient
             ->getClient()
             ->httpRequest($query);
 
-        if ($ignoreEmptyResponse && empty($responseBody)) {
-            $response = '';
-        } else {
-            $response = json_decode($responseBody, true);
+        $response = $this->parseResponse($ignoreEmptyResponse, $responseBody);
 
-            /**
-             * Parse Json checking.
-             */
-            if (json_last_error() != JSON_ERROR_NONE) {
-                throw new JsonException($this->getJsonLastErrorMsg(json_last_error()));
-            }
-        }
-
-        /**
-         * Checking HTTP Code.
-         */
-        if ($checkHTTPCode != $httpCode) {
-            throw new InvalidCodeException($httpCode . (
-                is_array($response) && isset($response['error']) ? ', ' . $response['error'] : ''
-            ));
-        }
+        $this->checkingHTTPCode(
+            $checkHTTPCode,
+            $httpCode,
+            is_array($response) && isset($response['error']) ? ', ' . $response['error'] : ''
+        );
 
         return array(
             'response' => $response,
@@ -200,5 +177,66 @@ class HTTPClient
         }
 
         return $message;
+    }
+
+    /**
+     * Creates a complete URL to the resource.
+     * Returns the created URL.
+     *
+     * @param string    $endpoint   API Endpoint.
+     *
+     * @return string
+     */
+    private function getApiUrl($endpoint)
+    {
+        return implode(
+            '/',
+            array(
+                $this->getConfig()->getApiUrl(),
+                $endpoint
+            )
+        );
+    }
+
+    /**
+     * Checking HTTP Code.
+     *
+     * @param int       $checkHTTPCode      Verification HTTP code.
+     * @param int       $httpCode           Verifiable HTTP code.
+     * @param string    $message            Error message.
+     *
+     * @throws InvalidCodeException
+     */
+    private function checkingHTTPCode($checkHTTPCode, $httpCode, $message)
+    {
+        if ($checkHTTPCode != $httpCode) {
+            throw new InvalidCodeException($httpCode . ($message));
+        }
+    }
+
+    /**
+     * Parsing with the API response.
+     *
+     * @param bool      $ignoreEmptyResponse    A sign of ignoring an empty response.
+     * @param string    $responseBody           HTTP response from the API.
+     *
+     * @return array
+     *
+     * @throws JsonException
+     */
+    private function parseResponse($ignoreEmptyResponse, $responseBody)
+    {
+        $response = array();
+        if (!$ignoreEmptyResponse && !empty($responseBody)) {
+            $response = json_decode($responseBody, true);
+
+            /**
+             * Parse Json checking.
+             */
+            if (json_last_error() != JSON_ERROR_NONE) {
+                throw new JsonException($this->getJsonLastErrorMsg(json_last_error()));
+            }
+        }
+        return $response;
     }
 }
