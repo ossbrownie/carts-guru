@@ -31,6 +31,7 @@ namespace Brownie\CartsGuru\Model;
  * @method  Order       setCountryCode($countryCode)                Set country ISO code of the buyer.
  * @method  Order       setCustom($custom)                          Set any custom fields.
  * @method  ItemList    getItems()                                  Get items.
+ * @method  string      getEndpoint()                               Returns a endpoint name.
  */
 class Order extends DataModel
 {
@@ -85,4 +86,11 @@ class Order extends DataModel
         'countryCode',
         'items',
     );
+
+    /**
+     * Endpoint name.
+     *
+     * @var string
+     */
+    protected $endpoint = 'orders';
 }

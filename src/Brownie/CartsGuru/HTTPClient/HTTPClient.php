@@ -10,6 +10,7 @@ namespace Brownie\CartsGuru\HTTPClient;
 use Brownie\CartsGuru\Exception\InvalidCodeException;
 use Brownie\CartsGuru\Exception\JsonException;
 use Brownie\CartsGuru\Config;
+use Brownie\CartsGuru\Model\DataModel;
 
 /**
  * HTTP client.
@@ -103,11 +104,11 @@ class HTTPClient
      * Performs a network request in CartsGuru.
      * Returns the response from CartsGuru.
      *
-     * @param int       $checkHTTPCode          Checked HTTP Code
-     * @param string    $endpoint               The access endpoint to the resource.
-     * @param array     $data                   An array of data to send.
-     * @param string    $method                 Query Method.
-     * @param boolean   $ignoreEmptyResponse    Semaphore of ignoring an empty response.
+     * @param int               $checkHTTPCode          Checked HTTP Code
+     * @param string            $endpoint               The access endpoint to the resource.
+     * @param array|DataModel   $data                   An array of data to send.
+     * @param string            $method                 Query Method.
+     * @param boolean           $ignoreEmptyResponse    Semaphore of ignoring an empty response.
      *
      * @throws InvalidCodeException
      * @throws JsonException

@@ -29,6 +29,7 @@ namespace Brownie\CartsGuru\Model;
  * @method  Cart    setCountry($country)                        Set country of the buyer.
  * @method  Cart    setCountryCode($countryCode)                Set country ISO code of the buyer.
  * @method  Cart    setCustom($custom)                          Set any custom fields.
+ * @method  string  getEndpoint()                               Returns a endpoint name.
  */
 class Cart extends DataModel
 {
@@ -82,4 +83,11 @@ class Cart extends DataModel
         'countryCode',
         'items',
     );
+
+    /**
+     * Endpoint name.
+     *
+     * @var string
+     */
+    protected $endpoint = 'carts';
 }

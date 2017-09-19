@@ -17,6 +17,20 @@ abstract class DataModel extends ArrayList
 {
 
     /**
+     * List of required fields.
+     *
+     * @var array
+     */
+    protected $requiredFields = array();
+
+    /**
+     * Endpoint name.
+     *
+     * @var string
+     */
+    protected $endpoint = '';
+
+    /**
      * Returns the field list as an array.
      *
      * @return array
@@ -88,7 +102,10 @@ abstract class DataModel extends ArrayList
             throw new ValidateException('No required fields: ' . implode(', ', $keys));
         }
 
-        foreach ($this->getItems()->toArray() as $item) {
+        /**
+         * @var $item   Item    Product.
+         */
+        foreach ($this->getItemList()->toArray() as $item) {
             $item->validate();
         }
     }
@@ -101,5 +118,15 @@ abstract class DataModel extends ArrayList
     protected function getRequiredFields()
     {
         return $this->requiredFields;
+    }
+
+    /**
+     * Returns a endpoint name.
+     *
+     * @return string
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
     }
 }

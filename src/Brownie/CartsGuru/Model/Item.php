@@ -57,7 +57,7 @@ class Item extends ArrayList
             'imageUrl',
         ), array_keys($args));
 
-        if ($keys) {
+        if (!empty($keys)) {
             throw new ValidateException('No required fields: ' . implode(', ', $keys));
         }
     }

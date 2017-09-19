@@ -89,6 +89,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($email, $this->cartClass->getEmail());
         $this->assertEquals($country, $this->cartClass->getCountry());
         $this->assertEquals($countryCode, $this->cartClass->getCountryCode());
+        $this->assertEquals('carts', $this->cartClass->getEndpoint());
     }
 
     /**

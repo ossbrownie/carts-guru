@@ -4,7 +4,7 @@ use Brownie\CartsGuru\CartsGuru;
 use Brownie\CartsGuru\HTTPClient\HTTPClient;
 use Prophecy\Prophecy\MethodProphecy;
 
-class CartGuruTest extends PHPUnit_Framework_TestCase
+class CartsGuruTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -81,6 +81,16 @@ class CartGuruTest extends PHPUnit_Framework_TestCase
                 $methodSetSiteId->willReturn(null)
             );
 
+        $methodGetEndpoint = new MethodProphecy(
+            $cartMock,
+            'getEndpoint',
+            array()
+        );
+        $cartMock
+            ->addMethodProphecy(
+                $methodGetEndpoint->willReturn('carts')
+            );
+
         $cart = $cartMock->reveal();
 
         $methodRequest = new MethodProphecy(
@@ -136,6 +146,16 @@ class CartGuruTest extends PHPUnit_Framework_TestCase
         $orderMock
             ->addMethodProphecy(
                 $methodSetSiteId->willReturn(null)
+            );
+
+        $methodGetEndpoint = new MethodProphecy(
+            $orderMock,
+            'getEndpoint',
+            array()
+        );
+        $orderMock
+            ->addMethodProphecy(
+                $methodGetEndpoint->willReturn('orders')
             );
 
         $order = $orderMock->reveal();

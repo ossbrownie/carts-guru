@@ -10,6 +10,7 @@ namespace Brownie\CartsGuru;
 use Brownie\CartsGuru\HTTPClient\HTTPClient;
 use Brownie\CartsGuru\Model\Cart;
 use Brownie\CartsGuru\Model\Order;
+use Brownie\CartsGuru\Model\DataModel;
 
 /**
  * CartsGuru API.
@@ -91,46 +92,49 @@ class CartsGuru
 
     /**
      * Track Cart.
+     * Returns the status of the request.
      *
-     * @param Cart $cart
+     * @param Cart      $cart    Description of the cart.
      *
      * @return boolean
      */
     public function trackCart(Cart $cart)
     {
-        $cart->setSiteId($this->getSiteId());
-        $cart->validate();
-
-        $response = $this
-            ->getHttpClient()
-            ->request(
-                HTTPClient::HTTP_CODE_200,
-                'carts',
-                $cart,
-                HTTPClient::HTTP_METHOD_POST
-            );
-
-        return isset($response['response']['status']) && ('success' == $response['response']['status']);
+        return $this->track($cart);
     }
 
     /**
      * Track Order.
+     * Returns the status of the request.
      *
-     * @param Order $order
+     * @param Order     $order      Description of the order.
      *
      * @return boolean
      */
     public function trackOrder(Order $order)
     {
-        $order->setSiteId($this->getSiteId());
-        $order->validate();
+        return $this->track($order);
+    }
+
+    /**
+     * Request track.
+     * Returns the status of the request.
+     *
+     * @param DataModel     $model      Description of the data.
+     *
+     * @return bool
+     */
+    private function track(DataModel $model)
+    {
+        $model->setSiteId($this->getSiteId());
+        $model->validate();
 
         $response = $this
             ->getHttpClient()
             ->request(
                 HTTPClient::HTTP_CODE_200,
-                'orders',
-                $order,
+                $model->getEndpoint(),
+                $model,
                 HTTPClient::HTTP_METHOD_POST
             );
 

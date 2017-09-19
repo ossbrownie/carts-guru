@@ -15,6 +15,13 @@ use Brownie\CartsGuru\Exception\UndefinedMethodException;
 abstract class ArrayList
 {
 
+    /**
+     * List of supported fields.
+     *
+     * @var array
+     */
+    protected $fields = array();
+
     public function __construct($values = array())
     {
         foreach ($values as $key => $value) {

@@ -22,7 +22,7 @@ abstract class EntityList
 
     private function createList()
     {
-        $this->list = new \ArrayIterator();
+        $this->list = new \ArrayIterator(array());
     }
 
     /**
