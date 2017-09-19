@@ -12,6 +12,8 @@ use Brownie\CartsGuru\Exception\ValidateException;
 
 /**
  * Data model.
+ *
+ * @method  DataModel    setSiteId($siteId)    Sets siteId.
  */
 abstract class DataModel extends ArrayList
 {
