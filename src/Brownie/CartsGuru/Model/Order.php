@@ -7,6 +7,8 @@
 
 namespace Brownie\CartsGuru\Model;
 
+use Brownie\CartsGuru\Model\Base\DataModel;
+
 /**
  * Order Model.
  *

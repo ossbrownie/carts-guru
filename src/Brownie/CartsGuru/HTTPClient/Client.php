@@ -23,7 +23,7 @@ interface Client
      *
      * @throws ClientException
      *
-     * @return array
+     * @return Response
      */
     public function httpRequest(Query $query);
 }

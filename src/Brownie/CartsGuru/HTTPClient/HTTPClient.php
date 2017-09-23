@@ -10,7 +10,7 @@ namespace Brownie\CartsGuru\HTTPClient;
 use Brownie\CartsGuru\Exception\InvalidCodeException;
 use Brownie\CartsGuru\Exception\JsonException;
 use Brownie\CartsGuru\Config;
-use Brownie\CartsGuru\Model\DataModel;
+use Brownie\CartsGuru\Model\Base\DataModel;
 
 /**
  * HTTP client.
@@ -136,21 +136,21 @@ class HTTPClient
             ->setMethod($method)
             ->setTimeOut($this->getConfig()->getTimeOut());
 
-        list($responseBody, $httpCode, $runtime) = $this
+        $response = $this
             ->getClient()
             ->httpRequest($query);
 
-        $response = $this->parseResponse($ignoreEmptyResponse, $responseBody);
+        $responseBody = $this->parseResponse($ignoreEmptyResponse, $response->getBody());
 
         $this->checkingHTTPCode(
             $checkHTTPCode,
-            $httpCode,
-            is_array($response) && isset($response['error']) ? ', ' . $response['error'] : ''
+            $response->getHttpCode(),
+            is_array($responseBody) && isset($responseBody['error']) ? ', ' . $responseBody['error'] : ''
         );
 
         return array(
-            'response' => $response,
-            'runtime' => $runtime,
+            'response' => $responseBody,
+            'runtime' => $response->getRuntime(),
         );
     }
 

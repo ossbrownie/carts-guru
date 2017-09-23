@@ -87,14 +87,10 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $this
             ->clientMock
             ->addMethodProphecy(
-                $methodHttprequest->willReturn(array(
-                    '{"status":"success"}',
-                    200,
-                    0.7
-                ))
+                $methodHttprequest->willReturn($this->getHTTPClientResponse('{"status":"success"}', 200, 0.7))
             );
 
-        $status = $this->httpClientClass->request(200, 'carts', array(), 'POST');//
+        $status = $this->httpClientClass->request(200, 'carts', array(), 'POST');
 
         $this->assertEquals('success', $status['response']['status']);
 
@@ -126,11 +122,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $this
             ->clientMock
             ->addMethodProphecy(
-                $methodHttpRequest->willReturn(array(
-                    '{"status":"success"}',
-                    200,
-                    0.7
-                ))
+                $methodHttpRequest->willReturn($this->getHTTPClientResponse('{"status":"success"}', 200, 0.7))
             );
 
         $status = $this->httpClientClass->request(200, 'orders', array(), 'POST');
@@ -155,11 +147,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $this
             ->clientMock
             ->addMethodProphecy(
-                $methodHttpRequest->willReturn(array(
-                    'Json fail',
-                    200,
-                    0.7
-                ))
+                $methodHttpRequest->willReturn($this->getHTTPClientResponse('Json fail', 200, 0.7))
             );
 
         $this->httpClientClass->request(200, 'orders', array(), 'POST');
@@ -178,11 +166,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $this
             ->clientMock
             ->addMethodProphecy(
-                $methodHttpRequest->willReturn(array(
-                    '{}',
-                    404,
-                    0.7
-                ))
+                $methodHttpRequest->willReturn($this->getHTTPClientResponse('{}', 404, 0.7))
             );
 
         $this->httpClientClass->request(200, 'orders', array(), 'POST');
@@ -199,11 +183,7 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
         $this
             ->clientMock
             ->addMethodProphecy(
-                $methodHttpRequest->willReturn(array(
-                    $message,
-                    200,
-                    0.7
-                ))
+                $methodHttpRequest->willReturn($this->getHTTPClientResponse($message, 200, 0.7))
             );
 
         $response = $this->httpClientClass->request(200, 'orders', array(), 'POST', true);
@@ -238,5 +218,46 @@ class HTTPClientTest extends PHPUnit_Framework_TestCase
             ->setTimeOut($timeOut);
 
         return $query;
+    }
+
+    private function getHTTPClientResponse($body, $httpCode, $runtime)
+    {
+        $response = $this
+            ->prophesize('Brownie\CartsGuru\HTTPClient\Response');
+
+        $methodGetBody = new MethodProphecy(
+            $response,
+            'getBody',
+            array()
+        );
+
+        $methodGetHttpCode = new MethodProphecy(
+            $response,
+            'getHttpCode',
+            array()
+        );
+
+        $methodGetRuntime = new MethodProphecy(
+            $response,
+            'getRuntime',
+            array()
+        );
+
+        $response
+            ->addMethodProphecy(
+                $methodGetBody->willReturn($body)
+            );
+
+        $response
+            ->addMethodProphecy(
+                $methodGetHttpCode->willReturn($httpCode)
+            );
+
+        $response
+            ->addMethodProphecy(
+                $methodGetRuntime->willReturn($runtime)
+            );
+
+        return $response->reveal();
     }
 }

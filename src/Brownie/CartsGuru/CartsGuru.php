@@ -10,7 +10,7 @@ namespace Brownie\CartsGuru;
 use Brownie\CartsGuru\HTTPClient\HTTPClient;
 use Brownie\CartsGuru\Model\Cart;
 use Brownie\CartsGuru\Model\Order;
-use Brownie\CartsGuru\Model\DataModel;
+use Brownie\CartsGuru\Model\Base\DataModel;
 
 /**
  * CartsGuru API.

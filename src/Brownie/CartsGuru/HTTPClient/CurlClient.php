@@ -23,7 +23,7 @@ class CurlClient implements Client
      *
      * @throws ClientException
      *
-     * @return array
+     * @return Response
      */
     public function httpRequest(Query $query)
     {
@@ -47,11 +47,11 @@ class CurlClient implements Client
 
         curl_close($curl);
 
-        return array(
-            $responseBody,
-            $httpCode,
-            $runtime
-        );
+        $response = new Response();
+        return $response
+            ->setBody($responseBody)
+            ->setHttpCode($httpCode)
+            ->setRuntime($runtime);
     }
 
     /**
