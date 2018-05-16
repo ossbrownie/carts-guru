@@ -1,11 +1,11 @@
 {
     "name": "ossbrownie/carts-guru",
     "description": "Recover Your Abandoned Carts and Turn Them into Sales.",
-    "license": "LGPLv3",
+    "license": "MIT",
     "type": "library",
     "keywords": ["brownie", "carts-guru", "carts.guru", "abandoned carts"],
     "homepage": "https://github.com/ossbrownie/carts-guru",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "authors": [
         {
             "name": "brownie",
